@@ -1,0 +1,33 @@
+<h1>プロジェクト詳細</h1>
+
+<p>
+  <strong>プロジェクト名:</strong>
+  <%= @project.name %>
+</p>
+
+<p>
+  <strong>説明:</strong>
+  <%= @project.description %>
+</p>
+
+<p>
+  <strong>状態:</strong>
+  <%= @project.status %>
+</p>
+
+<h2>タスク一覧</h2>
+<% if @project.tasks.any? %>
+  <ul>
+    <% @project.tasks.each do |task| %>
+      <li>
+        <strong>タスク名:</strong> <%= task.title %>  
+        (<strong>期限:</strong> <%= task.due_date %>)
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>タスクは登録されていません。</p>
+<% end %>
+
+<%= link_to '編集', edit_project_path(@project), class: "btn btn-secondary" %> |
+<%= link_to '一覧に戻る', projects_path, class: "btn btn-link" %>
