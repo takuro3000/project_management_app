@@ -1,0 +1,31 @@
+<h1>プロジェクト一覧</h1>
+
+<%= link_to '新規プロジェクト作成', new_project_path, class: "btn btn-primary" %>
+
+<table>
+  <thead>
+    <tr>
+      <th>プロジェクト名</th>
+      <th>説明</th>
+      <th>状態</th>
+      <th>タスク数</th>
+      <th>作成日</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @projects.each do |project| %>
+      <tr>
+        <td><%= link_to project.name, project_path(project) %></td>
+        <td><%= truncate(project.description, length: 50) %></td>
+        <td><%= project.status %></td>
+        <td><%= project.tasks.count %></td>
+        <td><%= l(project.created_at, format: :short) %></td>
+        <td>
+          <%= link_to '編集', edit_project_path(project) %> |
+          <%= button_to '削除', project_path(project), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

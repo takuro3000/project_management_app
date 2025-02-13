@@ -1,0 +1,51 @@
+<h1>プロジェクト編集</h1>
+
+<%= form_with(model: @project, local: true) do |form| %>
+  <% if @project.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@project.errors.count, "件のエラー") %> により保存できませんでした:</h2>
+      <ul>
+        <% @project.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, "プロジェクト名" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :description, "説明" %>
+    <%= form.text_area :description %>
+  </div>
+
+  <h3>タスク (複数登録可能)</h3>
+  <div id="tasks">
+    <%= form.fields_for :tasks do |task_form| %>
+      <div class="nested-fields">
+        <div>
+          <%= task_form.label :title, "タスク名" %>
+          <%= task_form.text_field :title %>
+        </div>
+        <div>
+          <%= task_form.label :due_date, "期限" %>
+          <%= task_form.date_field :due_date %>
+        </div>
+        <div>
+          <%= task_form.check_box :_destroy %>
+          <%= task_form.label :_destroy, "このタスクを削除" %>
+        </div>
+        <hr>
+      </div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.submit "プロジェクト更新", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<%= link_to '詳細に戻る', project_path(@project), class: "btn btn-link" %>
